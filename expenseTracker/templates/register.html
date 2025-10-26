@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}
+Expense Tracker: Register
+{% endblock %}
+
+{% block content %}
+<h1>Personal Expense Tracker</h1>
+<h2>Register for an account</h2>
+<div>
+    <form action="{% url 'register' %}" method="post">
+        {% csrf_token %}
+        {% for field in form %}
+        
+        <table>
+            <tbody>
+                <th>{{ field.label }}</th>
+                <tr>{{ field }} {{ field.errors }}</tr>
+            </tbody>
+        </table>
+        {% endfor %}
+        <button type="submit">Sign Up</button>
+        {% for message in messages %}
+        {% if message.tags == 'error' %}
+        {{ message }}
+        {% endif %}
+        {% endfor %}
+
+    </form>
+</div>
+{% endblock %}

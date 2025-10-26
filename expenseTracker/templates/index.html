@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% block title %}
+Expense Tracker - Take Control of Your Finances
+{% endblock %}
+
+{% block content %}
+
+
+<!-- Main Content -->
+{% if not request.user.is_authenticated %}
+<main>
+    <!-- Hero Section -->
+    <section>
+        <h1 >
+            Stop Guessing. <br>Start <span>Saving.</span>
+        </h1>
+        <p>
+            Track every penny, visualize your spending habits, and build a better budget with the ultimate Expense
+            Tracker. Financial control starts here.
+        </p>
+        <div>
+            <button>
+                Get Started - It's Free
+            </button>
+            
+        </div>
+        <!-- Image for visual appeal -->
+        <div>
+
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section>
+        <div>
+            <div>
+                <h2>Features That Count</h2>
+                <p>
+                    Everything you need to master your money.
+                </p>
+            </div>
+
+            <div>
+
+                <!-- Feature 1: Real-time Tracking -->
+                <div>
+                    <h3 >Real-Time Tracking</h3>
+                    <p >Log expenses instantly on the go. See your current balance and
+                        spending categories updated moment-by-moment.</p>
+                </div>
+
+                <!-- Feature 2: Visual Reports -->
+                <div>
+                    <h3>Visual Reports</h3>
+                    <p>Understand where your money goes with beautiful, easy-to-read charts
+                        and detailed spending breakdown reports.</p>
+                </div>
+
+                <!-- Feature 3: Budget Setting -->
+                <div>
+                    <h3>Smart Budgeting</h3>
+                    <p>Set monthly budgets for different categories and get alerts before you
+                        overspend. Achieve your savings goals effortlessly.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final Call to Action Section -->
+    <section>
+        <div>
+            <h2>
+                Ready to take control of your finances today?
+            </h2>
+            <p>
+                Join thousands of happy users who are finally achieving their financial goals.
+            </p>
+            <div>
+                <a href="{% url 'register' %}">Sign Up Now</a>
+            </div>
+        </div>
+    </section>
+</main>
+{% else %}
+<main>
+    <!-- Hero Section -->
+    <section>
+        <h1>
+            Add New Expense
+        </h1>
+        <div>
+
+            <form action="/" method="post">
+                {% csrf_token %}
+                <div>
+                    {% for field in form %}
+                    <div>
+                        {{ field.label }}
+                    </div>
+                    <div>
+                        {{ field }}
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div>
+                    <div>
+                        <button type="submit">
+                            Save
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- Image for visual appeal -->
+        <div>
+        </div>
+    </section>
+    <section>
+        <div>
+
+            {% for value in expenses %}
+            {{ value.date }} | {{ value.category }} | {{ value.amount }} <br>
+            {% endfor %}
+        </div>
+    </section>
+
+    
+</main>
+{% endif %}
+{% for message in messages %}
+    {% if message.tags == 'success' %}
+    {{ message }}
+    {% endif %}
+{% endfor %}
+{% endblock %}

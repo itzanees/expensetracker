@@ -1,0 +1,25 @@
+<!-- Header / Navigation Bar -->
+<header>
+    <nav>
+        <!-- Logo/App Name -->
+            <div>
+            <a href="{% url 'home' %}">Expense Tracker</a>
+        </div>
+
+        <!-- CTA Buttons -->
+        <div>
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'profile' %}">Profile</a>
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token%}
+                <button type="submit">Logout</button>
+            </form>
+            {% else %}
+            <a href="{% url 'login' %}">Log In</a>
+            <a href="{% url 'register' %}">
+                Sign Up Free
+            </a>
+            {% endif %}
+        </div>
+    </nav>
+</header>
